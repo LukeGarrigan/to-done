@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="js/myApp.js"></script>
+<script src="js/myCtrl.js"></script>
+
+
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home page</title>
+    <link rel="stylesheet" type="text/css" href="styles/style.css"/>
+</head>
+<body ng-app="myApp">
+
+
+    <my-test-directive></my-test-directive>
+    <div ng-controller="myCtrl">
+        <form name="myForm">
+            <label>Task: <input ng-model="user.message"></label>
+            <input type="submit" ng-click="addTask(user)">
+        </form>
+
+
+
+        <div class="row">
+            <div class="column" style="background-color:#aaa;" >
+                <h2>TODO</h2>
+
+
+                <div ng-repeat="info in taskInfo">
+                    <div class="task" ng-if="info.status == 'todo'">
+                        {{info.message}}
+
+                        <div class="cross">
+                            <img ng-src="images/cross.png" ng-click="deleteTask(info)"/>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="column" style="background-color:#bbb;">
+                <h2>DOING</h2>
+
+                <div ng-repeat="info in taskInfo">
+                    <div ng-if="info.status == 'doing'">
+                        {{info.message}}
+
+                        <div class="cross">
+                            <img ng-src="images/cross.png" ng-click="deleteTask(info)"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column" style="background-color:#ccc;">
+                <h2>DONE</h2>
+
+                <div ng-repeat="info in taskInfo">
+                    <div ng-if="info.status == 'done'">
+                        {{info.message}}
+
+                        <div class="cross">
+                            <img ng-src="images/cross.png" ng-click="deleteTask(info)"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

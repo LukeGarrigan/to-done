@@ -1,0 +1,11 @@
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.SQLServer2012Dialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://localhost:1443;databaseName=todone;sendStringParametersAsUnicode=false
+    username: programmer
+    password: Srgsys01
