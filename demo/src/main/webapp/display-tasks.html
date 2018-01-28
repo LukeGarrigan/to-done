@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="row">
+    <div class="column" style="background-color:#aaa;" >
+        <h2>TODO</h2>
+
+
+        <div ng-repeat="info in taskInfo">
+            <div class="task" ng-if="info.status == 'todo'">
+
+
+                <div class="cross">
+                    <img ng-src="images/cross.png" ng-click="deleteTask(info)"/>
+                </div>
+
+                <div class="right">
+                    <img ng-src="images/right.png" ng-click="moveRight(info)"/>
+                </div>
+
+                <div class="message-container">
+                    {{info.message}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="column" style="background-color:#bbb;">
+        <h2>DOING</h2>
+
+        <div ng-repeat="info in taskInfo">
+            <div class="task" ng-if="info.status == 'doing'">
+                <div class="cross">
+                    <img ng-src="images/cross.png" ng-click="deleteTask(info)"/>
+                </div>
+
+                <div class="right">
+                    <img ng-src="images/right.png" ng-click="moveRight(info)"/>
+                </div>
+
+                <div class="left">
+                    <img ng-src="images/left.png" ng-click="moveLeft(info)"/>
+                </div>
+
+                <div class="message-container">
+                    {{info.message}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="column" style="background-color:#ccc;">
+        <h2>DONE</h2>
+
+        <div ng-repeat="info in taskInfo">
+            <div class="task" ng-if="info.status == 'done'">
+
+                <div class="cross">
+                    <img ng-src="images/cross.png" ng-click="deleteTask(info)"/>
+                </div>
+
+                <div class="left">
+                    <img ng-src="images/left.png" ng-click="moveLeft(info)"/>
+                </div>
+
+                <div class="message-container">
+                    {{info.message}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

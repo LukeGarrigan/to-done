@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<section>
+<div class="new-task">
+    <div class="input-group">
+        <textarea ng-model="user.message" class="form-control custom-control" rows="3" style="resize:none"></textarea>
+        <span class="input-group-addon btn btn-primary" ng-click="addTask(user)">Add Task</span>
+    </div>
+
+</div>
+<div id="completedCount" ng-show="completedCount>0">
+    <div ng-show="completedCount===1">
+        <p>You have completed: {{completedCount}} task</p>
+    </div>
+    <div ng-show="completedCount>1">
+        <p>You have completed: {{completedCount}} tasks</p>
+    </div>
+</div>
+</section>
+</body>
+</html>

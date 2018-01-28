@@ -1,9 +1,13 @@
 var app = angular.module("myApp", []);
 
-
-app.directive("myTestDirective", function(){
+app.directive("addNewTask", function(){
     return {
-        template: "<h1> My To-Done List</h1>"
+        templateUrl: 'add-new-task.html'
     };
+});
 
+app.directive("displayTasks", function(){
+    return {
+        templateUrl: 'display-tasks.html'
+    };
 });

@@ -10,79 +10,29 @@
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <title>Home page</title>
     <link rel="stylesheet" type="text/css" href="styles/style.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body ng-app="myApp">
-
-
-    <my-test-directive></my-test-directive>
-    <div ng-controller="myCtrl">
-        <form name="myForm">
-            <label>Task: <input ng-model="user.message"></label>
-            <input type="submit" ng-click="addTask(user)">
-        </form>
-
-
-
-        <div class="row">
-            <div class="column" style="background-color:#aaa;" >
-                <h2>TODO</h2>
-
-
-                <div ng-repeat="info in taskInfo">
-                    <div class="task" ng-if="info.status == 'todo'">
-                        {{info.message}}
-
-                        <div class="cross">
-                            <img ng-src="images/cross.png" ng-click="deleteTask(info)"/>
-                        </div>
-
-                        <div class="right">
-                            <img ng-src="images/right.png" ng-click="moveRight(info)"/>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="column" style="background-color:#bbb;">
-                <h2>DOING</h2>
-
-                <div ng-repeat="info in taskInfo">
-                    <div class="task" ng-if="info.status == 'doing'">
-                        {{info.message}}
-
-                        <div class="cross">
-                            <img ng-src="images/cross.png" ng-click="deleteTask(info)"/>
-                        </div>
-
-                        <div class="right">
-                            <img ng-src="images/right.png" ng-click="moveRight(info)"/>
-                        </div>
-
-                        <div class="left">
-                            <img ng-src="images/left.png" ng-click="moveLeft(info)"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="column" style="background-color:#ccc;">
-                <h2>DONE</h2>
-
-                <div ng-repeat="info in taskInfo">
-                    <div class="task" ng-if="info.status == 'done'">
-                        {{info.message}}
-
-                        <div class="cross">
-                            <img ng-src="images/cross.png" ng-click="deleteTask(info)"/>
-                        </div>
-
-                        <div class="left">
-                            <img ng-src="images/left.png" ng-click="moveLeft(info)"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="container">
+        <div class="jumbotron"?>
+            <h1>TO-DONE</h1>
+            <p>Keep track of stuff you need to do, and bloody do it!</p>
         </div>
 
+        <div ng-controller="myCtrl">
+
+
+            <add-new-task></add-new-task>
+            <display-tasks></display-tasks>
+
+
+        </div>
     </div>
 </body>
 </html>

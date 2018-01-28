@@ -3,6 +3,7 @@ app.controller("myCtrl", function ($scope, $http) {
 
     $scope.taskInfo = [];
 
+    $scope.completedCount = 0;
 
     $scope.addTask = function(hello){
         hello.status = "todo";
@@ -41,6 +42,7 @@ app.controller("myCtrl", function ($scope, $http) {
             task.status='doing';
         }else if(task.status ==='doing'){
             task.status='done';
+            $scope.completedCount++;
         }
 
         var json = JSON.stringify(task);
@@ -59,6 +61,7 @@ app.controller("myCtrl", function ($scope, $http) {
             task.status='todo';
         }else if(task.status ==='done'){
             task.status='doing';
+            $scope.completedCount--;
         }
 
         var json = JSON.stringify(task);
