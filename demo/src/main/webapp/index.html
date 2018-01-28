@@ -36,6 +36,10 @@
                             <img ng-src="images/cross.png" ng-click="deleteTask(info)"/>
                         </div>
 
+                        <div class="right">
+                            <img ng-src="images/right.png" ng-click="moveRight(info)"/>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -43,11 +47,19 @@
                 <h2>DOING</h2>
 
                 <div ng-repeat="info in taskInfo">
-                    <div ng-if="info.status == 'doing'">
+                    <div class="task" ng-if="info.status == 'doing'">
                         {{info.message}}
 
                         <div class="cross">
                             <img ng-src="images/cross.png" ng-click="deleteTask(info)"/>
+                        </div>
+
+                        <div class="right">
+                            <img ng-src="images/right.png" ng-click="moveRight(info)"/>
+                        </div>
+
+                        <div class="left">
+                            <img ng-src="images/left.png" ng-click="moveLeft(info)"/>
                         </div>
                     </div>
                 </div>
@@ -56,11 +68,15 @@
                 <h2>DONE</h2>
 
                 <div ng-repeat="info in taskInfo">
-                    <div ng-if="info.status == 'done'">
+                    <div class="task" ng-if="info.status == 'done'">
                         {{info.message}}
 
                         <div class="cross">
                             <img ng-src="images/cross.png" ng-click="deleteTask(info)"/>
+                        </div>
+
+                        <div class="left">
+                            <img ng-src="images/left.png" ng-click="moveLeft(info)"/>
                         </div>
                     </div>
                 </div>

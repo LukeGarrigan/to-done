@@ -33,7 +33,45 @@ app.controller("myCtrl", function ($scope, $http) {
 
         indexOfTask = $scope.taskInfo.indexOf(toBeDeleted);
         $scope.taskInfo.splice(indexOfTask);
+    };
+
+    $scope.moveRight = function(task){
+
+        if(task.status === 'todo'){
+            task.status='doing';
+        }else if(task.status ==='doing'){
+            task.status='done';
+        }
+
+        var json = JSON.stringify(task);
+        $http.post("task/update", json, {
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+
     }
+
+    $scope.moveLeft = function(task){
+
+        if(task.status === 'doing'){
+            task.status='todo';
+        }else if(task.status ==='done'){
+            task.status='doing';
+        }
+
+        var json = JSON.stringify(task);
+        $http.post("task/update", json, {
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+
+    }
+
+
 
 
 });
