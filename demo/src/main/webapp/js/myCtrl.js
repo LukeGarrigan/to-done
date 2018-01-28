@@ -9,6 +9,7 @@ app.controller("myCtrl", function ($scope, $http) {
 
 
     $scope.addTask = function(hello){
+        document.getElementById("output").value = "";
         hello.status = "todo";
         var json = JSON.stringify(hello);
         $http.post("task/update", json, {
@@ -53,7 +54,7 @@ app.controller("myCtrl", function ($scope, $http) {
             }
         });
 
-    }
+    };
 
     $scope.moveLeft = function(task){
 
