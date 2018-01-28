@@ -1,9 +1,12 @@
 app.controller("myCtrl", function ($scope, $http) {
+    $http.get("/task/getTasks")
+        .then(function(response){
+           $scope.taskInfo = response.data;
+        });
 
-
-    $scope.taskInfo = [];
 
     $scope.completedCount = 0;
+
 
     $scope.addTask = function(hello){
         hello.status = "todo";
@@ -23,17 +26,14 @@ app.controller("myCtrl", function ($scope, $http) {
         $http.delete("task/deleteTask/" + task.id);
 
 
-        var toBeDeleted = {};
-        var indexOfTask;
 
-        angular.forEach($scope.taskInfo, function(value, index){
-            if(value.id === task.id){
-                toBeDeleted = value;
+        for (var i = $scope.taskInfo.length - 1; i >= 0; i--) {
+            if ($scope.taskInfo[i].id === task.id) {
+                $scope.taskInfo.splice(i, 1);
             }
-        });
+        }
 
-        indexOfTask = $scope.taskInfo.indexOf(toBeDeleted);
-        $scope.taskInfo.splice(indexOfTask);
+
     };
 
     $scope.moveRight = function(task){

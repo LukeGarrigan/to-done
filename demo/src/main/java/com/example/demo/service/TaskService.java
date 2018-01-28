@@ -7,6 +7,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class TaskService {
 
@@ -32,6 +35,17 @@ public class TaskService {
 
     public void deleteTask(long id){
         taskDao.delete(id);
+    }
+
+    public List<TaskDto> getAllTasks(){
+        List<Task> all = taskDao.findAll();
+
+        List<TaskDto> allDtos = new ArrayList<>();
+
+        for(Task t: all){
+            allDtos.add(modelMapper.map(t, TaskDto.class));
+        }
+        return allDtos;
     }
 
 }

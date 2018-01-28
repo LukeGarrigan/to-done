@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/task")
 public class TaskController {
@@ -23,5 +25,11 @@ public class TaskController {
     @RequestMapping(value ="/deleteTask/{id}", method = RequestMethod.DELETE)
     public void deleteTask(@PathVariable String id){
         taskService.deleteTask(Long.parseLong(id));
-   }
+    }
+
+    @RequestMapping(value ="/getTasks", method = RequestMethod.GET)
+    public List<TaskDto> getAllTasks(){
+        return taskService.getAllTasks();
+    }
+
 }
