@@ -8,11 +8,11 @@
 <section>
 <div class="new-task">
     <div class="input-group">
-        <textarea id="output" ng-model="user.message" class="form-control custom-control" rows="3" style="resize:none"></textarea>
-        <span class="input-group-addon btn btn-primary" ng-click="addTask(user)">Add Task</span>
+        <textarea id="output" ng-model="task.message" class="form-control custom-control" rows="3" style="resize:none" ng-trim="false"></textarea>
+        <span style="color:{{getTextCountColour(task.message.length)}}" class="input-group-addon btn btn-primary" ng-click="addTask(task)">Add Task <br><br> {{(70 - task.message.length)}}</span>
     </div>
-
 </div>
+
 <div id="completedCount" ng-show="completedCount>0">
     <div ng-show="completedCount===1">
         <p>You have completed: {{completedCount}} task</p>
