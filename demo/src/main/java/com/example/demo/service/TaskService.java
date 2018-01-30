@@ -27,7 +27,19 @@ public class TaskService {
         task.setStatus(taskDto.getStatus());
         task.setId(taskDto.getId());
 
-        taskDao.save(task);
+        List<Task> allTasks = taskDao.findAll();
+
+        boolean taskAlreadyExists = false;
+        for(Task t: allTasks){
+            if(t.getMessage().equals(task.getMessage())){
+              taskAlreadyExists = true;
+            }
+        }
+
+        if(!taskAlreadyExists){
+            taskDao.save(task);
+        }
+
 
         return modelMapper.map(task, TaskDto.class);
     }

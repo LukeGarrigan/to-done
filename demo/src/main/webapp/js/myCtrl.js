@@ -11,6 +11,14 @@ app.controller("myCtrl", function ($scope, $http) {
 
     $scope.addTask = function(task){
         document.getElementById("output").value = "";
+
+        for(var i=0; i<$scope.taskInfo.length; i++){
+            if(task.message === $scope.taskInfo[i].message){
+                // do some kind of popup
+                return;
+            }
+        }
+
         task.status = "todo";
         var json = JSON.stringify(task);
         $http.post("task/update", json, {
