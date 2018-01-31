@@ -99,3 +99,13 @@ section{
     font-weight: 200;
 }
 
+.columnCount{
+    background-color:white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    right:0;
+    top:0;
+    text-align: center;
+}
+

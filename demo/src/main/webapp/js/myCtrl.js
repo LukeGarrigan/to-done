@@ -5,6 +5,8 @@ app.controller("myCtrl", function ($scope, $http) {
            $scope.totalTasks = response.data.length;
         });
 
+    $scope.toDoCount = 0;
+    $scope.doingCount = 0;
     $scope.completedCount = 0;
 
 
@@ -30,6 +32,10 @@ app.controller("myCtrl", function ($scope, $http) {
             $scope.message = response.data.message;
             $scope.taskInfo.push(response.data);
             $scope.totalTasks++;
+            $scope.toDoCount++;
+            // set to null, so on submit of a new task the status
+            // doesn't have an affect on the message count
+          /*  $scope.task = null;*/
         });
     };
 
@@ -42,6 +48,10 @@ app.controller("myCtrl", function ($scope, $http) {
             if ($scope.taskInfo[i].id === task.id) {
                 if($scope.taskInfo[i].status === 'done'){
                     $scope.completedCount--;
+                }else if ($scope.taskInfo[i].status === 'todo'){
+                    $scope.toDoCount--;
+                }else if ($scope.taskInfo[i].status === 'doing'){
+                    $scope.doingCount--;
                 }
                 $scope.taskInfo.splice(i, 1);
             }
@@ -51,13 +61,22 @@ app.controller("myCtrl", function ($scope, $http) {
 
     };
 
+
+    /**
+     * shifting the task to the right
+     *
+     * @param task
+     */
     $scope.moveRight = function(task){
 
         if(task.status === 'todo'){
             task.status='doing';
+            $scope.toDoCount--;
+            $scope.doingCount++;
         }else if(task.status ==='doing'){
             task.status='done';
             $scope.completedCount++;
+            $scope.doingCount--;
         }
 
         var json = JSON.stringify(task);
@@ -70,13 +89,23 @@ app.controller("myCtrl", function ($scope, $http) {
 
     };
 
+
+    /**
+     *
+     * shifting the task to the left
+     *
+     * @param task
+     */
     $scope.moveLeft = function(task){
 
         if(task.status === 'doing'){
             task.status='todo';
+            $scope.doingCount--;
+            $scope.toDoCount++;
         }else if(task.status ==='done'){
             task.status='doing';
             $scope.completedCount--;
+            $scope.doingCount++;
         }
 
         var json = JSON.stringify(task);
@@ -90,13 +119,12 @@ app.controller("myCtrl", function ($scope, $http) {
     };
 
 
-
-    $scope.countLimit = function(){
-        document.getElementById("output").onkeyup = function(){
-            var count = this.value.length;
-        }
-    };
-
+    /**
+     *
+     * If the user writes over the specified character count, the text goes red to inform them of their naughtiness
+     * @param count
+     * @returns {string}
+     */
     $scope.getTextCountColour = function(count){
         if(70-count < 0){
             return "red";
@@ -104,6 +132,22 @@ app.controller("myCtrl", function ($scope, $http) {
             return "black";
         }
     };
+
+    /**
+     * Returns the count a tasks message,
+     * @param task
+     * @returns {number}
+     */
+    $scope.getTextCount = function(task){
+        if(task !== undefined) {
+
+            // task has already been submitted, reset the count
+            if (task.status === undefined) {
+                return task.message.length;
+            }
+        }
+        return 0;
+    }
 
 
 

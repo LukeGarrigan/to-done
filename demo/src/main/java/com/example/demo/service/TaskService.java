@@ -31,7 +31,10 @@ public class TaskService {
 
         boolean taskAlreadyExists = false;
         for(Task t: allTasks){
-            if(t.getMessage().equals(task.getMessage())){
+
+            // we want to make sure that we don't have a duplicate and also wantt to ensure that we're not preventing an
+            // update of an already existing task
+            if(t.getMessage().equals(task.getMessage()) && t.getId() != task.getId()){
               taskAlreadyExists = true;
             }
         }

@@ -9,7 +9,7 @@
 <div class="new-task">
     <div class="input-group">
         <textarea id="output" ng-model="task.message" class="form-control custom-control" rows="3" style="resize:none" ng-trim="false"></textarea>
-        <span style="color:{{getTextCountColour(task.message.length)}}" class="input-group-addon btn btn-primary" ng-click="addTask(task)">Add Task <br><br> {{(70 - task.message.length)}}</span>
+        <span style="color:{{getTextCountColour(task.message.length)}}" class="input-group-addon btn btn-primary" ng-click="addTask(task)">Add Task <br><br> {{70 - getTextCount(task)}}</span>
     </div>
 </div>
 
