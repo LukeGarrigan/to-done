@@ -3,11 +3,22 @@ app.controller("myCtrl", function ($scope, $http) {
         .then(function(response){
            $scope.taskInfo = response.data;
            $scope.totalTasks = response.data.length;
+           $scope.toDoCount = 0;
+           $scope.doingCount = 0;
+           $scope.completedCount = 0;
+
+
+            for(var i=0; i<$scope.taskInfo.length; i++){
+               if($scope.taskInfo[i].status === 'todo'){
+                   $scope.toDoCount++;
+               }else if($scope.taskInfo[i].status === 'doing'){
+                   $scope.doingCount++;
+               }else if($scope.taskInfo[i].status === 'done') {
+                   $scope.completedCount++;
+               }
+           }
         });
 
-    $scope.toDoCount = 0;
-    $scope.doingCount = 0;
-    $scope.completedCount = 0;
 
 
 
@@ -35,7 +46,7 @@ app.controller("myCtrl", function ($scope, $http) {
             $scope.toDoCount++;
             // set to null, so on submit of a new task the status
             // doesn't have an affect on the message count
-          /*  $scope.task = null;*/
+            $scope.task = null;
         });
     };
 
