@@ -12,7 +12,7 @@ body {
     width: 33.33%;
     padding: 10px;
     height:100%;
-    max-height: 600px; /* Should be removed. Only for demonstration */
+    max-height: 800px; /* Should be removed. Only for demonstration */
     bottom: 0;
     overflow: auto;
 }
@@ -31,6 +31,10 @@ body {
     }
 }
 
+.task:hover{
+    background-color:#F8F8FF;
+}
+
 .task{
     margin-top:0.5em;
     position:relative;
@@ -40,7 +44,9 @@ body {
     padding:20px;
     width: 100%;
     height: 100px;
+    cursor:pointer;
 }
+
 
 .cross img{
     height:1em;
@@ -109,3 +115,13 @@ section{
     text-align: center;
 }
 
+
+.new-task-text:hover{
+    text-decoration:underline;
+}
+.new-task-text{
+    font-family: "Arial", serif;
+    font-style: normal;
+    text-transform: lowercase;
+    font-size:1em;
+}

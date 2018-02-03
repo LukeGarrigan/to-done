@@ -8,19 +8,20 @@
 <div class="row">
     <div class="column" style="background-color:#aaa;" >
         <h2>TODO</h2>
+
         <div class="columnCount">
             {{toDoCount}}
         </div>
-        <div ng-repeat="info in taskInfo">
-            <div class="task" ng-if="info.status == 'todo'">
 
+        <div ng-repeat="info in taskInfo">
+            <div class="task" ng-if="info.status == 'todo'" ng-click="editTask($event ,info)">
 
                 <div class="cross">
-                    <img ng-src="images/cross.png" ng-click="deleteTask(info)"/>
+                    <img ng-src="images/cross.png" ng-click="showConfirm($event, info); $event.stopPropagation()"/>
                 </div>
 
                 <div class="right">
-                    <img ng-src="images/right.png" ng-click="moveRight(info)"/>
+                    <img ng-src="images/right.png" ng-click="moveRight(info); $event.stopPropagation()"/>
                 </div>
 
                 <div class="message-container">
@@ -28,24 +29,29 @@
                 </div>
             </div>
         </div>
+
+        <md-button class="new-task-text" ng-click="showPrompt($event, 'todo')"   >
+            Add new task...
+        </md-button>
     </div>
     <div class="column" style="background-color:#bbb;">
         <h2>DOING</h2>
         <div class="columnCount">
             {{doingCount}}
+
         </div>
         <div ng-repeat="info in taskInfo">
-            <div class="task" ng-if="info.status == 'doing'">
+            <div class="task" ng-if="info.status == 'doing'" ng-click="editTask($event ,info)">
                 <div class="cross">
-                    <img ng-src="images/cross.png" ng-click="deleteTask(info)"/>
+                    <img ng-src="images/cross.png" ng-click="showConfirm($event, info); $event.stopPropagation()"/>
                 </div>
 
                 <div class="right">
-                    <img ng-src="images/right.png" ng-click="moveRight(info)"/>
+                    <img ng-src="images/right.png" ng-click="moveRight(info); $event.stopPropagation()"/>
                 </div>
 
                 <div class="left">
-                    <img ng-src="images/left.png" ng-click="moveLeft(info)"/>
+                    <img ng-src="images/left.png" ng-click="moveLeft(info); $event.stopPropagation()"/>
                 </div>
 
                 <div class="message-container">
@@ -53,6 +59,10 @@
                 </div>
             </div>
         </div>
+
+        <md-button class="new-task-text" ng-click="showPrompt($event, 'doing')"   >
+            Add new task...
+        </md-button>
     </div>
     <div class="column" style="background-color:#ccc;">
         <h2>DONE</h2>
@@ -60,14 +70,14 @@
             {{completedCount}}
         </div>
         <div ng-repeat="info in taskInfo">
-            <div class="task" ng-if="info.status == 'done'">
+            <div class="task" ng-if="info.status == 'done'" ng-click="editTask($event ,info)">
 
                 <div class="cross">
-                    <img ng-src="images/cross.png" ng-click="deleteTask(info)"/>
+                    <img ng-src="images/cross.png" ng-click="showConfirm($event, info); $event.stopPropagation()"/>
                 </div>
 
                 <div class="left">
-                    <img ng-src="images/left.png" ng-click="moveLeft(info)"/>
+                    <img ng-src="images/left.png" ng-click="moveLeft(info); $event.stopPropagation()"/>
                 </div>
 
                 <div class="message-container">
@@ -75,6 +85,9 @@
                 </div>
             </div>
         </div>
+        <md-button class="new-task-text" ng-click="showPrompt($event, 'done')"   >
+            Add new task...
+        </md-button>
     </div>
 </div>
 

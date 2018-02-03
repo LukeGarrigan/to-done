@@ -1,4 +1,4 @@
-app.controller("myCtrl", function ($scope, $http) {
+app.controller("myCtrl", function ($scope, $http, $mdDialog) {
     $http.get("/task/getTasks")
         .then(function(response){
            $scope.taskInfo = response.data;
@@ -20,19 +20,37 @@ app.controller("myCtrl", function ($scope, $http) {
         });
 
 
-
-
-    $scope.addTask = function(task){
-        document.getElementById("output").value = "";
-
+    /**
+     *
+     * Checks whether a task is valid, and displays popups if not!
+     *
+     * @param task
+     * @param ev
+     * @returns {boolean}
+     */
+    $scope.isValidTask = function(task, ev){
+        if(70-task.message.length < 0){
+            $scope.showAlert(ev, "Too long");
+            return false;
+        }
         for(var i=0; i<$scope.taskInfo.length; i++){
             if(task.message === $scope.taskInfo[i].message){
                 // do some kind of popup
-                return;
+                $scope.showAlert(ev, "Exists");
+                return false;
             }
         }
+        return true;
+    };
 
-        task.status = "todo";
+
+
+    $scope.addTask = function(task,status, ev){
+        if(!$scope.isValidTask(task, ev)){
+            return;
+        }
+
+        task.status = status;
         var json = JSON.stringify(task);
         $http.post("task/update", json, {
             headers:{
@@ -43,7 +61,14 @@ app.controller("myCtrl", function ($scope, $http) {
             $scope.message = response.data.message;
             $scope.taskInfo.push(response.data);
             $scope.totalTasks++;
-            $scope.toDoCount++;
+            if(response.data.status==="todo"){
+                $scope.toDoCount++;
+            }else if(response.data.status==="doing"){
+                $scope.doingCount++;
+            }else if(response.data.status==="done"){
+                $scope.completedCount++;
+            }
+
             // set to null, so on submit of a new task the status
             // doesn't have an affect on the message count
             $scope.task = null;
@@ -150,18 +175,90 @@ app.controller("myCtrl", function ($scope, $http) {
      * @returns {number}
      */
     $scope.getTextCount = function(task){
-        if(task !== undefined) {
-
+        if(task !== undefined && task != null) {
             // task has already been submitted, reset the count
-            if (task.status === undefined) {
+            if (task.status == null) {
                 return task.message.length;
             }
         }
         return 0;
-    }
+    };
 
 
+    $scope.showAlert = function(ev, message) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        // Modal dialogs should fully cover application
+        // to prevent interaction outside of dialog
+        $mdDialog.show(
+            $mdDialog.alert()
+                .parent(angular.element(document.querySelector('#popupContainer')))
+                .clickOutsideToClose(true)
+                .title(message==='Too long' ? 'Come on, keep it short!' : 'The task already exists!')
+                .textContent(message==='Too long' ? 'Make your task title nice and short, if you need more space maybe consider splitting the task into multiple tasks!' : 'Look at your board silly, its already there!')
+                .ariaLabel('Alert Dialog Demo')
+                .ok('Got it!')
+                .targetEvent(ev)
+        );
+    };
 
+    $scope.showPrompt = function(ev, status) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        var confirm = $mdDialog.prompt()
+            .title('Create a new task!')
+            .textContent('Be sure to keep it short and sweet!')
+            .placeholder('Task')
+            .ariaLabel('New Task')
+            .initialValue('')
+            .targetEvent(ev)
+            .ok('Add!')
+            .cancel('Cancel');
+
+        $mdDialog.show(confirm).then(function(result) {
+            task = {};
+            task.message = result;
+            $scope.addTask(task, status, ev);
+        }, function() {
+            $scope.status = 'You didn\'t name your dog.';
+        });
+    };
+
+    $scope.editTask = function(ev, task) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        var confirm = $mdDialog.prompt()
+            .title('Edit your task!')
+            .textContent('Be sure to keep it short and sweet!')
+            .placeholder('Task')
+            .ariaLabel('New Task')
+            .initialValue(task.message)
+            .targetEvent(ev)
+            .ok('Add!')
+            .cancel('Cancel');
+
+        $mdDialog.show(confirm).then(function(result) {
+            $scope.deleteTask(task);
+            newTask = {};
+            newTask.message = result;
+            $scope.addTask(newTask, task.status, ev);
+        }, function() {
+            $scope.status = 'You didn\'t name your dog.';
+        });
+    };
+
+
+    $scope.showConfirm = function(ev, task) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        var confirm = $mdDialog.confirm()
+            .title('Are you sure you want to delete this task?')
+            .textContent('There will be no trace of this task, it will disappear into the ether!')
+            .ariaLabel('')
+            .targetEvent(ev)
+            .ok('Yes')
+            .cancel('No');
+
+        $mdDialog.show(confirm).then(function() {
+            $scope.deleteTask(task);
+        });
+    };
 
 
 
