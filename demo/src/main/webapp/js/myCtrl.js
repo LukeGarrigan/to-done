@@ -35,9 +35,12 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
         }
         for(var i=0; i<$scope.taskInfo.length; i++){
             if(task.message === $scope.taskInfo[i].message){
-                // do some kind of popup
-                $scope.showAlert(ev, "Exists");
-                return false;
+                // to check that its not checking its own task
+                if(task.id !== $scope.taskInfo[i].id){
+                    // do some kind of popup
+                    $scope.showAlert(ev, "Exists");
+                    return false;
+                }
             }
         }
         return true;
@@ -59,19 +62,33 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
             }
         }).then(function mySuccess(response){
             $scope.message = response.data.message;
-            $scope.taskInfo.push(response.data);
-            $scope.totalTasks++;
-            if(response.data.status==="todo"){
-                $scope.toDoCount++;
-            }else if(response.data.status==="doing"){
-                $scope.doingCount++;
-            }else if(response.data.status==="done"){
-                $scope.completedCount++;
+
+            // check first that the task isn't in the task list
+
+            var exists = false;
+            for(var i =0; i< $scope.taskInfo.length; i++){
+                if(response.data.id===$scope.taskInfo[i].id){
+                    $scope.taskInfo[i].message = response.data.message;
+                    exists = true;
+                    break;
+                }
+            }
+            if(!exists){
+                $scope.taskInfo.push(response.data);
+                $scope.totalTasks++;
+                if(response.data.status==="todo"){
+                    $scope.toDoCount++;
+                }else if(response.data.status==="doing"){
+                    $scope.doingCount++;
+                }else if(response.data.status==="done"){
+                    $scope.completedCount++;
+                }
+
+                // set to null, so on submit of a new task the status
+                // doesn't have an affect on the message count
+                $scope.task = null;
             }
 
-            // set to null, so on submit of a new task the status
-            // doesn't have an affect on the message count
-            $scope.task = null;
         });
     };
 
@@ -231,14 +248,16 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
             .ariaLabel('New Task')
             .initialValue(task.message)
             .targetEvent(ev)
-            .ok('Add!')
+            .ok('Submit!')
             .cancel('Cancel');
 
         $mdDialog.show(confirm).then(function(result) {
-            $scope.deleteTask(task);
+            task.message = result;
+
+          /*  $scope.deleteTask(task);
             newTask = {};
-            newTask.message = result;
-            $scope.addTask(newTask, task.status, ev);
+            newTask.message = result;*/
+            $scope.addTask(task, task.status, ev);
         }, function() {
             $scope.status = 'You didn\'t name your dog.';
         });
