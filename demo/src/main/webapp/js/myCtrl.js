@@ -252,14 +252,14 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
             .cancel('Cancel');
 
         $mdDialog.show(confirm).then(function(result) {
-            task.message = result;
 
-          /*  $scope.deleteTask(task);
-            newTask = {};
-            newTask.message = result;*/
-            $scope.addTask(task, task.status, ev);
-        }, function() {
-            $scope.status = 'You didn\'t name your dog.';
+            var temp = task.message;
+            task.message = result;
+            if($scope.isValidTask(task, ev)){
+                $scope.addTask(task, task.status, ev);
+            }
+            task.message = temp;
+
         });
     };
 
