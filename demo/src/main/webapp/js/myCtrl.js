@@ -1,4 +1,4 @@
-app.controller("myCtrl", function ($scope, $http, $mdDialog) {
+app.controller("myCtrl", function ($scope, $http, $mdDialog, $timeout) {
     $http.get("/task/getTasks")
         .then(function(response){
            $scope.taskInfo = response.data;
@@ -49,10 +49,6 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
 
 
     $scope.addTask = function(task,status, ev){
-        if(!$scope.isValidTask(task, ev)){
-            return;
-        }
-
         task.status = status;
         var json = JSON.stringify(task);
         $http.post("task/update", json, {
@@ -233,7 +229,10 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
         $mdDialog.show(confirm).then(function(result) {
             task = {};
             task.message = result;
-            $scope.addTask(task, status, ev);
+            if($scope.isValidTask(task, ev)){
+                $scope.addTask(task, status, ev);
+            }
+
         }, function() {
             $scope.status = 'You didn\'t name your dog.';
         });
@@ -257,6 +256,10 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
             task.message = result;
             if($scope.isValidTask(task, ev)){
                 $scope.addTask(task, task.status, ev);
+            }else{
+                setTimeout(function() {
+                    $scope.editTask(ev, task);
+                }, 2000);
             }
             task.message = temp;
 
