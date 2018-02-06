@@ -1,7 +1,8 @@
 # to-done
 
-A simple to do list project using spring-boot and AngularJS
+A simple to do list project using spring-boot and AngularJS for learning purposes. 
 
-//TODO
-Rather than laying out my todone todo here, I'm now using trello instead:
+View my public Trello board to see what I'm currently working on:
 https://trello.com/b/4shbA85e/to-done
+
+I am open to any suggestions for the app, as I'm only doing it as a little side project to learn angular.
