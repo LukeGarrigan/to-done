@@ -11,3 +11,14 @@ app.directive("displayTasks", function(){
         templateUrl: 'display-tasks.html'
     };
 });
+
+app.directive('myOnKeyDownCall', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            scope.$apply(function (){
+                scope.$eval(attrs.ngEnter);
+            });
+            event.preventDefault();
+        });
+    };
+});

@@ -37,9 +37,11 @@
         <div class="jumbotron"?>
             <h1>TO-DONE</h1>
             <p>Keep track of stuff you need to do, and bloody do it!</p>
+            <input type="text" ng-model="searchCriteria" class="form-control" placeholder="Search">
         </div>
 
         <div ng-controller="myCtrl">
+
 
 
             <display-tasks></display-tasks>

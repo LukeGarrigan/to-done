@@ -13,7 +13,7 @@
             {{toDoCount}}
         </div>
 
-        <div ng-repeat="info in taskInfo">
+        <div ng-repeat="info in taskInfo | filter:searchCriteria">
             <div class="task" ng-if="info.status == 'todo'" ng-click="editTask($event ,info)">
 
                 <div class="cross">
@@ -40,7 +40,7 @@
             {{doingCount}}
 
         </div>
-        <div ng-repeat="info in taskInfo">
+        <div ng-repeat="info in taskInfo | filter:searchCriteria">
             <div class="task" ng-if="info.status == 'doing'" ng-click="editTask($event ,info)">
                 <div class="cross">
                     <img ng-src="images/cross.png" ng-click="showConfirm($event, info); $event.stopPropagation()"/>
@@ -69,7 +69,7 @@
         <div class="columnCount">
             {{completedCount}}
         </div>
-        <div ng-repeat="info in taskInfo">
+        <div ng-repeat="info in taskInfo | filter:searchCriteria">
             <div class="task" ng-if="info.status == 'done'" ng-click="editTask($event ,info)">
 
                 <div class="cross">
