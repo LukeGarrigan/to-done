@@ -275,6 +275,7 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog, $timeout) {
             .ariaLabel('')
             .targetEvent(ev)
             .ok('Yes')
+            .ok('Hello')
             .cancel('No');
 
         $mdDialog.show(confirm).then(function() {
