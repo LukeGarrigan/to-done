@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -26,7 +28,7 @@ public class TaskService {
         task.setMessage(taskDto.getMessage());
         task.setStatus(taskDto.getStatus());
         task.setId(taskDto.getId());
-
+        task.setSequenceNumber(taskDto.getSequenceNumber());
         List<Task> allTasks = taskDao.findAll();
 
         boolean taskAlreadyExists = false;
@@ -60,6 +62,16 @@ public class TaskService {
         for(Task t: all){
             allDtos.add(modelMapper.map(t, TaskDto.class));
         }
+
+        allDtos.sort(new Comparator<TaskDto>() {
+            @Override
+            public int compare(TaskDto o1, TaskDto o2) {
+                if (o1.getSequenceNumber() == o2.getSequenceNumber()) {
+                    return 0;
+                }
+                return o1.getSequenceNumber() < o2.getSequenceNumber() ? -1 : 1;
+            }
+        });
         return allDtos;
     }
 

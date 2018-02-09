@@ -13,6 +13,17 @@ public class Task extends AbstractEntity{
     @Column(nullable = false)
     private String status;
 
+    @Column
+    private long sequenceNumber;
+
+    public long getSequenceNumber() {
+        return sequenceNumber;
+    }
+
+    public void setSequenceNumber(long sequenceNumber) {
+        this.sequenceNumber = sequenceNumber;
+    }
+
     public String getMessage() {
         return message;
     }

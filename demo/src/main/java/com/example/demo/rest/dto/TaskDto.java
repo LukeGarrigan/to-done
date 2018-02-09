@@ -7,6 +7,15 @@ public class TaskDto implements Serializable{
     private String status;
     private String message;
     private long id;
+    private long sequenceNumber;
+
+    public long getSequenceNumber() {
+        return sequenceNumber;
+    }
+
+    public void setSequenceNumber(long sequenceNumber) {
+        this.sequenceNumber = sequenceNumber;
+    }
 
     public String getStatus() {
         return status;

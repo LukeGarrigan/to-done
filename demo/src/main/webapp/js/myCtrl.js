@@ -50,6 +50,18 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog, $timeout) {
 
     $scope.addTask = function(task,status, ev){
         task.status = status;
+
+        // check highest sequence number in current column
+        var highestNumber = -1;
+        for(var i=0; i< $scope.taskInfo.length; i++) {
+            if($scope.taskInfo[i].sequenceNumber > highestNumber && $scope.taskInfo[i].status === status){
+                highestNumber = $scope.taskInfo[i].sequenceNumber;
+            }
+        }
+        // we want the sequence to be the next highest as tasks are added to the bottom
+        highestNumber = highestNumber +1;
+        task.sequenceNumber = highestNumber;
+
         var json = JSON.stringify(task);
         $http.post("task/update", json, {
             headers:{
@@ -127,7 +139,6 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog, $timeout) {
             $scope.completedCount++;
             $scope.doingCount--;
         }
-
         var json = JSON.stringify(task);
         $http.post("task/update", json, {
             headers:{
