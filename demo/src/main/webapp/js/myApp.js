@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngMaterial']);
+var app = angular.module('myApp', ['ngMaterial'], ['angularjs-dragula(angular)']);
 
 app.directive("addNewTask", function(){
     return {
