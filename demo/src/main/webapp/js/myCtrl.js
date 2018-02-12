@@ -1,4 +1,4 @@
-app.controller("myCtrl", function ($scope, $http, $mdDialog, $timeout) {
+app.controller("myCtrl", function ($scope, $http, $mdDialog) {
     $http.get("/task/getTasks")
         .then(function(response){
            $scope.taskInfo = response.data;
@@ -295,5 +295,22 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog, $timeout) {
     };
 
 
+
+
+    // drag and drop stuff
+
+    $scope.drop = function(ev){
+      ev.dataTransfer.setData("task", ev.target.id);
+    };
+
+    $scope.allowDrop = function(ev){
+        ev.preventDefault();
+    };
+
+    $scope.drop = function(ev){
+        ev.preventDefault();
+        var task = ev.dataTransfer.getData("task");
+        ev.target.appendChild(document.getElementById(task));
+    };
 
 });

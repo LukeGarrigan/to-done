@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngMaterial']);
+var app = angular.module('myApp', ['ngMaterial', 'ngDragDrop']);
 
 app.directive("addNewTask", function(){
     return {
@@ -12,13 +12,3 @@ app.directive("displayTasks", function(){
     };
 });
 
-app.directive('myOnKeyDownCall', function () {
-    return function (scope, element, attrs) {
-        element.bind("keydown keypress", function (event) {
-            scope.$apply(function (){
-                scope.$eval(attrs.ngEnter);
-            });
-            event.preventDefault();
-        });
-    };
-});
