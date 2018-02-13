@@ -20,6 +20,7 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
         });
 
 
+
     /**
      *
      * Checks whether a task is valid, and displays popups if not!
@@ -295,22 +296,5 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
     };
 
 
-
-
-    // drag and drop stuff
-
-    $scope.drop = function(ev){
-      ev.dataTransfer.setData("task", ev.target.id);
-    };
-
-    $scope.allowDrop = function(ev){
-        ev.preventDefault();
-    };
-
-    $scope.drop = function(ev){
-        ev.preventDefault();
-        var task = ev.dataTransfer.getData("task");
-        ev.target.appendChild(document.getElementById(task));
-    };
 
 });
