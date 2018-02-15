@@ -13,8 +13,8 @@
             {{toDoCount}}
         </div>
 
-        <div ng-repeat="info in taskInfo | filter:searchCriteria" data-drop="true" ng-model='taskInfo' jqyoui-droppable="{index: {{$index}}}">
-            <div class="task" data-drag="{{info}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="taskInfo" jqyoui-draggable="{index: {{$index}},animate:true}" ng-if="info.status == 'todo'" ng-click="editTask($event ,info)">
+        <div ng-repeat="info in taskInfo | filter:searchCriteria" data-drop="true" ng-model='taskInfo' jqyoui-droppable="{index: {{$index}}};" >
+            <div class="task" data-drag="{{info.drag}}" data-jqyoui-options="{revert: 'invalid'};" ng-model="taskInfo" jqyoui-draggable="{index: {{$index}},animate:true }" ng-if="info.status == 'todo'" >
 
                 <div class="cross">
                     <img ng-src="images/cross.png" ng-click="showConfirm($event, info); $event.stopPropagation()"/>

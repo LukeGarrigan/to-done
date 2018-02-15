@@ -1,6 +1,5 @@
 app.controller("myCtrl", function ($scope, $http, $mdDialog) {
-    $http.get("/task/getTasks")
-        .then(function(response){
+    $http.get("/task/getTasks").then(function(response){
            $scope.taskInfo = response.data;
            $scope.totalTasks = response.data.length;
            $scope.toDoCount = 0;
@@ -8,16 +7,18 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
            $scope.completedCount = 0;
 
 
-            for(var i=0; i<$scope.taskInfo.length; i++){
-               if($scope.taskInfo[i].status === 'todo'){
+            for(var i=0; i< $scope.taskInfo.length; i++){
+               $scope.taskInfo[i].drag = true;
+               if( $scope.taskInfo[i].status === 'todo'){
                    $scope.toDoCount++;
-               }else if($scope.taskInfo[i].status === 'doing'){
+               }else if( $scope.taskInfo[i].status === 'doing'){
                    $scope.doingCount++;
-               }else if($scope.taskInfo[i].status === 'done') {
+               }else if(taskInfo[i].status === 'done') {
                    $scope.completedCount++;
                }
            }
         });
+
 
 
 
