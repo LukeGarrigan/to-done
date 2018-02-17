@@ -22,6 +22,12 @@ public class TaskController {
         return taskService.updateTask(taskDto);
     }
 
+    @RequestMapping(value ="/updateTasksSequenceNumbers", method = RequestMethod.POST)
+    public void updateTasks(@RequestBody List<TaskDto> taskDto){
+        taskService.updateTasksSequenceNumbers(taskDto);
+    }
+
+
     @RequestMapping(value ="/deleteTask/{id}", method = RequestMethod.DELETE)
     public void deleteTask(@PathVariable String id){
         taskService.deleteTask(Long.parseLong(id));
@@ -31,5 +37,7 @@ public class TaskController {
     public List<TaskDto> getAllTasks(){
         return taskService.getAllTasks();
     }
+
+
 
 }

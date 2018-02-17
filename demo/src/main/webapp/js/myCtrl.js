@@ -13,12 +13,41 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
                    $scope.toDoCount++;
                }else if( $scope.taskInfo[i].status === 'doing'){
                    $scope.doingCount++;
-               }else if(taskInfo[i].status === 'done') {
+               }else if($scope.taskInfo[i].status === 'done') {
                    $scope.completedCount++;
                }
            }
         });
 
+
+    $scope.sortableOptions = {
+        stop: function(e, ui){
+            var status = ui.item.sortable.model.status;
+            var count =0;
+            var tasksToBeUpdated = [];
+            for(var i=0; i<$scope.taskInfo.length; i++){
+                if($scope.taskInfo[i].status === status){
+                    $scope.taskInfo[i].sequenceNumber = count;
+                    tasksToBeUpdated[count] = $scope.taskInfo[i];
+                    count++;
+                }
+            }
+
+            updateTasks(tasksToBeUpdated);
+
+        }
+    };
+
+
+    function updateTasks(tasks){
+        var json = JSON.stringify(tasks);
+        $http.post("task/updateTasksSequenceNumbers", json, {
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+    }
 
 
 
@@ -288,7 +317,6 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
             .ariaLabel('')
             .targetEvent(ev)
             .ok('Yes')
-            .ok('Hello')
             .cancel('No');
 
         $mdDialog.show(confirm).then(function() {

@@ -22,6 +22,20 @@ public class TaskService {
     @Autowired
     private TaskDao taskDao;
 
+    public void updateTasksSequenceNumbers(List<TaskDto> taskDtos){
+        List<Task> all = taskDao.getTasksByStatus(taskDtos.get(0).getStatus());
+
+
+        for(TaskDto taskDto: taskDtos){
+            for(Task task: all){
+                if(taskDto.getId()==task.getId()){
+                    taskDao.updateTaskSequence(taskDto.getSequenceNumber(),taskDto.getId());
+                }
+            }
+
+        }
+    }
+
     public TaskDto updateTask(TaskDto taskDto){
         Task task = new Task();
 
