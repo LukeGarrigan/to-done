@@ -13,23 +13,24 @@
             {{toDoCount}}
         </div>
 
-        <div ng-repeat="info in taskInfo | filter:searchCriteria" data-drop="true" ng-model='taskInfo' jqyoui-droppable="{index: {{$index}}};" >
-            <div class="task" data-drag="{{info.drag}}" data-jqyoui-options="{revert: 'invalid'};" ng-model="taskInfo" jqyoui-draggable="{index: {{$index}},animate:true }" ng-if="info.status == 'todo'" >
+        <div ui-sortable ng-model="taskInfo">
+            <div  ng-repeat="info in taskInfo | filter:searchCriteria">
+                <div class="task" ng-if="info.status == 'todo'" ng-click="editTask($event ,info)" >
 
-                <div class="cross">
-                    <img ng-src="images/cross.png" ng-click="showConfirm($event, info); $event.stopPropagation()"/>
-                </div>
+                    <div class="cross">
+                        <img ng-src="images/cross.png" ng-click="showConfirm($event, info); $event.stopPropagation()"/>
+                    </div>
 
-                <div class="right">
-                    <img ng-src="images/right.png" ng-click="moveRight(info); $event.stopPropagation()"/>
-                </div>
+                    <div class="right">
+                        <img ng-src="images/right.png" ng-click="moveRight(info); $event.stopPropagation()"/>
+                    </div>
 
-                <div class="message-container">
-                    {{info.message}}
+                    <div class="message-container">
+                        {{info.message}}
+                    </div>
                 </div>
             </div>
         </div>
-
         <md-button class="new-task-text" ng-click="showPrompt($event, 'todo')"   >
             Add new task...
         </md-button>
@@ -40,26 +41,28 @@
             {{doingCount}}
 
         </div>
-        <div ng-repeat="info in taskInfo | filter:searchCriteria">
-            <div class="task" ng-if="info.status == 'doing'" ng-click="editTask($event ,info)">
-                <div class="cross">
-                    <img ng-src="images/cross.png" ng-click="showConfirm($event, info); $event.stopPropagation()"/>
-                </div>
 
-                <div class="right">
-                    <img ng-src="images/right.png" ng-click="moveRight(info); $event.stopPropagation()"/>
-                </div>
+        <div ui-sortable ng-model="taskInfo">
+            <div ng-repeat="info in taskInfo | filter:searchCriteria">
+                <div class="task" ng-if="info.status == 'doing'" ng-click="editTask($event ,info)">
+                    <div class="cross">
+                        <img ng-src="images/cross.png" ng-click="showConfirm($event, info); $event.stopPropagation()"/>
+                    </div>
 
-                <div class="left">
-                    <img ng-src="images/left.png" ng-click="moveLeft(info); $event.stopPropagation()"/>
-                </div>
+                    <div class="right">
+                        <img ng-src="images/right.png" ng-click="moveRight(info); $event.stopPropagation()"/>
+                    </div>
 
-                <div class="message-container">
-                    {{info.message}}
+                    <div class="left">
+                        <img ng-src="images/left.png" ng-click="moveLeft(info); $event.stopPropagation()"/>
+                    </div>
+
+                    <div class="message-container">
+                        {{info.message}}
+                    </div>
                 </div>
             </div>
         </div>
-
         <md-button class="new-task-text" ng-click="showPrompt($event, 'doing')"   >
             Add new task...
         </md-button>
@@ -69,19 +72,21 @@
         <div class="columnCount">
             {{completedCount}}
         </div>
-        <div ng-repeat="info in taskInfo | filter:searchCriteria">
-            <div class="task" ng-if="info.status == 'done'" ng-click="editTask($event ,info)">
+        <div ui-sortable ng-model="taskInfo">
+            <div ng-repeat="info in taskInfo | filter:searchCriteria">
+                <div class="task" ng-if="info.status == 'done'" ng-click="editTask($event ,info)">
 
-                <div class="cross">
-                    <img ng-src="images/cross.png" ng-click="showConfirm($event, info); $event.stopPropagation()"/>
-                </div>
+                    <div class="cross">
+                        <img ng-src="images/cross.png" ng-click="showConfirm($event, info); $event.stopPropagation()"/>
+                    </div>
 
-                <div class="left">
-                    <img ng-src="images/left.png" ng-click="moveLeft(info); $event.stopPropagation()"/>
-                </div>
+                    <div class="left">
+                        <img ng-src="images/left.png" ng-click="moveLeft(info); $event.stopPropagation()"/>
+                    </div>
 
-                <div class="message-container">
-                    {{info.message}}
+                    <div class="message-container">
+                        {{info.message}}
+                    </div>
                 </div>
             </div>
         </div>

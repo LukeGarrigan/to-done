@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngMaterial', 'ngDragDrop']);
+var app = angular.module('myApp', ['ngMaterial', 'ui.sortable']);
 
 app.directive("addNewTask", function(){
     return {
