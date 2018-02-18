@@ -6,14 +6,19 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
            $scope.doingCount = 0;
            $scope.completedCount = 0;
 
-
+           $scope.todo = [];
+           $scope.doing = [];
+           $scope.done = [];
             for(var i=0; i< $scope.taskInfo.length; i++){
                $scope.taskInfo[i].drag = true;
                if( $scope.taskInfo[i].status === 'todo'){
+                   $scope.todo.push($scope.taskInfo[i]);
                    $scope.toDoCount++;
                }else if( $scope.taskInfo[i].status === 'doing'){
+                   $scope.doing.push($scope.taskInfo[i]);
                    $scope.doingCount++;
                }else if($scope.taskInfo[i].status === 'done') {
+                   $scope.done.push($scope.taskInfo[i]);
                    $scope.completedCount++;
                }
            }
@@ -34,13 +39,13 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
                 }
             }
 
-            updateTasks(tasksToBeUpdated);
+            updateTasksSequenceNumbers(tasksToBeUpdated);
 
         }
     };
 
 
-    function updateTasks(tasks){
+    function updateTasksSequenceNumbers(tasks){
         var json = JSON.stringify(tasks);
         $http.post("task/updateTasksSequenceNumbers", json, {
             headers:{
@@ -116,10 +121,13 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
                 $scope.taskInfo.push(response.data);
                 $scope.totalTasks++;
                 if(response.data.status==="todo"){
+                    $scope.todo.push(response.data);
                     $scope.toDoCount++;
                 }else if(response.data.status==="doing"){
+                    $scope.doing.push(response.data);
                     $scope.doingCount++;
                 }else if(response.data.status==="done"){
+                    $scope.done.push(response.data);
                     $scope.completedCount++;
                 }
 
@@ -133,9 +141,6 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
 
     $scope.deleteTask = function(task){
         $http.delete("task/deleteTask/" + task.id);
-
-
-
         for (var i = $scope.taskInfo.length - 1; i >= 0; i--) {
             if ($scope.taskInfo[i].id === task.id) {
                 if($scope.taskInfo[i].status === 'done'){

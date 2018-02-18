@@ -13,9 +13,9 @@
             {{toDoCount}}
         </div>
 
-        <div class="apps-container" ui-sortable="sortableOptions"  id="sortable" ui-sortable-update="updateOrder"  ng-model="taskInfo">
-            <div  ng-repeat="info in taskInfo | filter:searchCriteria">
-                <div class="task" ng-if="info.status == 'todo'" ng-click="editTask($event ,info)" >
+        <div class="apps-container" ui-sortable="sortableOptions"  id="sortable" ui-sortable-update="updateOrder"  ng-model="todo">
+            <div  ng-repeat="info in todo| filter:searchCriteria">
+                <div class="task" ng-click="editTask($event ,info)" >
 
                     <div class="cross">
                         <img ng-src="images/cross.png" ng-click="showConfirm($event, info); $event.stopPropagation()"/>
@@ -39,12 +39,11 @@
         <h2>DOING</h2>
         <div class="columnCount">
             {{doingCount}}
-
         </div>
 
-        <div  class="apps-container" ui-sortable="sortableOptions" ng-model="taskInfo">
-            <div ng-repeat="info in taskInfo | filter:searchCriteria">
-                <div class="task" ng-if="info.status == 'doing'" ng-click="editTask($event ,info)">
+        <div  class="apps-container" ui-sortable="sortableOptions" ng-model="doing">
+            <div ng-repeat="info in doing | filter:searchCriteria">
+                <div class="task"  ng-click="editTask($event ,info)">
                     <div class="cross">
                         <img ng-src="images/cross.png" ng-click="showConfirm($event, info); $event.stopPropagation()"/>
                     </div>
@@ -72,9 +71,9 @@
         <div class="columnCount">
             {{completedCount}}
         </div>
-        <div class="apps-container" ui-sortable="sortableOptions" ng-model="taskInfo">
-            <div ng-repeat="info in taskInfo | filter:searchCriteria">
-                <div class="task" ng-if="info.status == 'done'" ng-click="editTask($event ,info)">
+        <div class="apps-container" ui-sortable="sortableOptions" ng-model="done">
+            <div ng-repeat="info in done | filter:searchCriteria">
+                <div class="task" ng-click="editTask($event ,info)">
 
                     <div class="cross">
                         <img ng-src="images/cross.png" ng-click="showConfirm($event, info); $event.stopPropagation()"/>
