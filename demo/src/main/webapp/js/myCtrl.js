@@ -21,6 +21,7 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
 
 
     $scope.sortableOptions = {
+        connectWith: ".apps-container",
         stop: function(e, ui){
             var status = ui.item.sortable.model.status;
             var count =0;
@@ -48,7 +49,6 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
             }
         });
     }
-
 
 
     /**
