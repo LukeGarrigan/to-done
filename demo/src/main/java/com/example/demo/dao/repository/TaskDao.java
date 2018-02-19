@@ -23,7 +23,7 @@ public interface TaskDao extends JpaRepository<Task, Long> {
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query(value ="UPDATE task t SET t.sequenceNumber =?1 WHERE t.id= ?2 ")
-    void updateTaskSequence(long sequenceNumber, long id);
+    @Query(value ="UPDATE task t SET t.sequenceNumber =?1 , t.status =?2 WHERE t.id= ?3 ")
+    void updateTaskSequence(long sequenceNumber, String status ,long id);
 
 }

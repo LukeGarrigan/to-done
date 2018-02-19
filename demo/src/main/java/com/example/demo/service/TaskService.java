@@ -23,16 +23,13 @@ public class TaskService {
     private TaskDao taskDao;
 
     public void updateTasksSequenceNumbers(List<TaskDto> taskDtos){
-        List<Task> all = taskDao.getTasksByStatus(taskDtos.get(0).getStatus());
-
-
+        List<Task> all = taskDao.findAll();
         for(TaskDto taskDto: taskDtos){
             for(Task task: all){
                 if(taskDto.getId()==task.getId()){
-                    taskDao.updateTaskSequence(taskDto.getSequenceNumber(),taskDto.getId());
+                    taskDao.updateTaskSequence(taskDto.getSequenceNumber(), taskDto.getStatus(),taskDto.getId());
                 }
             }
-
         }
     }
 

@@ -25,24 +25,67 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
         });
 
 
+
+
     $scope.sortableOptions = {
         connectWith: ".apps-container",
+
         stop: function(e, ui){
-            var status = ui.item.sortable.model.status;
-            var count =0;
-            var tasksToBeUpdated = [];
-            for(var i=0; i<$scope.taskInfo.length; i++){
-                if($scope.taskInfo[i].status === status){
-                    $scope.taskInfo[i].sequenceNumber = count;
-                    tasksToBeUpdated[count] = $scope.taskInfo[i];
-                    count++;
+            var movedColumn = false;
+            if($scope.toDoCount !== $scope.todo.length){
+                movedColumn = true;
+                for(var i=0; i< $scope.todo.length; i++){
+                    $scope.todo[i].status="todo";
+                    $scope.todo[i].sequenceNumber = i;
+                }
+                $scope.toDoCount = $scope.todo.length;
+                if($scope.toDoCount > 0){
+                    updateTasksSequenceNumbers($scope.todo);
                 }
             }
 
-            updateTasksSequenceNumbers(tasksToBeUpdated);
+            if($scope.doingCount !== $scope.doing.length){
+                movedColumn = true;
+                for(var i=0; i< $scope.doing.length; i++){
+                    $scope.doing[i].status="doing";
+                    $scope.doing[i].sequenceNumber = i;
+                }
+                $scope.doingCount = $scope.doing.length;
+                if($scope.doingCount > 0){
+                    updateTasksSequenceNumbers($scope.doing);
+                }
+            }
 
+            if($scope.completedCount !== $scope.done.length){
+                movedColumn = true;
+                for(var i=0; i< $scope.done.length; i++){
+                    $scope.done[i].status="done";
+                    $scope.done[i].sequenceNumber = i;
+                }
+                $scope.completedCount = $scope.done.length;
+
+                if($scope.completedCount > 0){
+                    updateTasksSequenceNumbers($scope.done);
+                }
+            }
+
+
+            // some ordering has changed within one column
+            if(!movedColumn){
+                var status = ui.item.sortable.model.status;
+
+                if(status === "todo")
+                updateOneColumn(status ,$scope.todo);
+            }
         }
     };
+
+    function updateOneColumn(status, column) {
+        for(var i=0; i<column.length; i++){
+                column[i].sequenceNumber = i;
+            }
+        updateTasksSequenceNumbers(column);
+    }
 
 
     function updateTasksSequenceNumbers(tasks){
@@ -141,107 +184,30 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
 
     $scope.deleteTask = function(task){
         $http.delete("task/deleteTask/" + task.id);
-        for (var i = $scope.taskInfo.length - 1; i >= 0; i--) {
-            if ($scope.taskInfo[i].id === task.id) {
-                if($scope.taskInfo[i].status === 'done'){
-                    $scope.completedCount--;
-                }else if ($scope.taskInfo[i].status === 'todo'){
-                    $scope.toDoCount--;
-                }else if ($scope.taskInfo[i].status === 'doing'){
-                    $scope.doingCount--;
+        if(task.status === "todo"){
+            for(var i =$scope.todo.length -1; i>=0 ; i--){
+                if($scope.todo[i].id === task.id){
+                    $scope.todo.splice(i, 1);
                 }
-                $scope.taskInfo.splice(i, 1);
+            }
+            task.toDoCount--;
+        }else if(task.status === "doing"){
+            for(var i =$scope.doing.length -1; i>=0; i--){
+                if($scope.doing[i].id === task.id){
+                    $scope.doing.splice(i, 1);
+                }
+            }
+        }else if(task.status === "done"){
+            for(var i =$scope.done.length -1; i>=0; i--){
+                if($scope.done[i].id === task.id){
+                    $scope.done.splice(i, 1);
+                }
             }
         }
+
         $scope.totalTasks--;
 
 
-    };
-
-
-    /**
-     * shifting the task to the right
-     *
-     * @param task
-     */
-    $scope.moveRight = function(task){
-
-        if(task.status === 'todo'){
-            task.status='doing';
-            $scope.toDoCount--;
-            $scope.doingCount++;
-        }else if(task.status ==='doing'){
-            task.status='done';
-            $scope.completedCount++;
-            $scope.doingCount--;
-        }
-        var json = JSON.stringify(task);
-        $http.post("task/update", json, {
-            headers:{
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        });
-
-    };
-
-
-    /**
-     *
-     * shifting the task to the left
-     *
-     * @param task
-     */
-    $scope.moveLeft = function(task){
-
-        if(task.status === 'doing'){
-            task.status='todo';
-            $scope.doingCount--;
-            $scope.toDoCount++;
-        }else if(task.status ==='done'){
-            task.status='doing';
-            $scope.completedCount--;
-            $scope.doingCount++;
-        }
-
-        var json = JSON.stringify(task);
-        $http.post("task/update", json, {
-            headers:{
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        });
-
-    };
-
-
-    /**
-     *
-     * If the user writes over the specified character count, the text goes red to inform them of their naughtiness
-     * @param count
-     * @returns {string}
-     */
-    $scope.getTextCountColour = function(count){
-        if(70-count < 0){
-            return "red";
-        }else{
-            return "black";
-        }
-    };
-
-    /**
-     * Returns the count a tasks message,
-     * @param task
-     * @returns {number}
-     */
-    $scope.getTextCount = function(task){
-        if(task !== undefined && task != null) {
-            // task has already been submitted, reset the count
-            if (task.status == null) {
-                return task.message.length;
-            }
-        }
-        return 0;
     };
 
 
