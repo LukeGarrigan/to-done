@@ -74,8 +74,13 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
             if(!movedColumn){
                 var status = ui.item.sortable.model.status;
 
-                if(status === "todo")
-                updateOneColumn(status ,$scope.todo);
+                if(status === "todo"){
+                    updateOneColumn(status ,$scope.todo);
+                }else if(status === "doing"){
+                    updateOneColumn(status, $scope.doing);
+                }else if(status === "done"){
+                    updateOneColumn(status, $scope.done);
+                }
             }
         }
     };
