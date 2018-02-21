@@ -117,29 +117,45 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
             $scope.showAlert(ev, "Too long");
             return false;
         }
-        for(var i=0; i<$scope.taskInfo.length; i++){
-            if(task.message === $scope.taskInfo[i].message){
-                // to check that its not checking its own task
-                if(task.id !== $scope.taskInfo[i].id){
-                    // do some kind of popup
+
+        for(var i=0; i<$scope.todo.length; i++){
+            if(task.message === $scope.todo[i].message){
+                if(task.id !== $scope.todo[i].id){
                     $scope.showAlert(ev, "Exists");
                     return false;
                 }
             }
         }
+        for(var i=0; i<$scope.doing.length; i++){
+            if(task.message === $scope.doing[i].message){
+                if(task.id !== $scope.doing[i].id){
+                    $scope.showAlert(ev, "Exists");
+                    return false;
+                }
+            }
+
+        }
+        for(var i=0; i<$scope.done.length; i++){
+            if(task.message === $scope.done[i].message){
+                if(task.id !== $scope.done[i].id){
+                    $scope.showAlert(ev, "Exists");
+                    return false;
+                }
+            }
+        }
+
         return true;
     };
-
-
 
     $scope.addTask = function(task,status, ev){
         task.status = status;
 
         // check highest sequence number in current column
         var highestNumber = -1;
-        for(var i=0; i< $scope.taskInfo.length; i++) {
-            if($scope.taskInfo[i].sequenceNumber > highestNumber && $scope.taskInfo[i].status === status){
-                highestNumber = $scope.taskInfo[i].sequenceNumber;
+        var column = getColumnByStatus(status);
+        for(var i =0; i<column.length; i++){
+            if(column[i].sequenceNumber > highestNumber){
+                highestNumber =column[i].sequenceNumber;
             }
         }
         // we want the sequence to be the next highest as tasks are added to the bottom
@@ -189,26 +205,22 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
 
     $scope.deleteTask = function(task){
         $http.delete("task/deleteTask/" + task.id);
-        if(task.status === "todo"){
-            for(var i =$scope.todo.length -1; i>=0 ; i--){
-                if($scope.todo[i].id === task.id){
-                    $scope.todo.splice(i, 1);
-                }
-            }
-            task.toDoCount--;
-        }else if(task.status === "doing"){
-            for(var i =$scope.doing.length -1; i>=0; i--){
-                if($scope.doing[i].id === task.id){
-                    $scope.doing.splice(i, 1);
-                }
-            }
-        }else if(task.status === "done"){
-            for(var i =$scope.done.length -1; i>=0; i--){
-                if($scope.done[i].id === task.id){
-                    $scope.done.splice(i, 1);
-                }
+
+        var taskColumn = getColumnByStatus(task.status);
+        for(var i=taskColumn.length-1; i >=0; i--){
+            if(taskColumn[i].id === task.id){
+                taskColumn.splice(i, 1);
             }
         }
+
+        if(task.status === "todo"){
+            $scope.toDoCount--;
+        }else if(task.status=== "doing"){
+           $scope.doingCount--;
+        }else if(task.status==="done"){
+            $scope.completedCount--;
+        }
+
 
         $scope.totalTasks--;
 
@@ -299,6 +311,18 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
             $scope.deleteTask(task);
         });
     };
+
+
+
+    function getColumnByStatus(status) {
+        if(status === "todo"){
+            return $scope.todo;
+        }else if(status=== "doing"){
+            return $scope.doing;
+        }else if(status==="done"){
+            return $scope.done;
+        }
+    }
 
 
 
