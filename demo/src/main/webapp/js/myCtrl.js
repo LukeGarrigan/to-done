@@ -239,6 +239,7 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
                 .title(message==='Too long' ? 'Come on, keep it short!' : 'The task already exists!')
                 .textContent(message==='Too long' ? 'Make your task title nice and short, if you need more space maybe consider splitting the task into multiple tasks!' : 'Look at your board silly, its already there!')
                 .ariaLabel('Alert Dialog Demo')
+                .clickOutsideToClose(true)
                 .ok('Got it!')
                 .targetEvent(ev)
         );
@@ -253,6 +254,7 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
             .ariaLabel('New Task')
             .initialValue('')
             .targetEvent(ev)
+            .clickOutsideToClose(true)
             .ok('Add!')
             .cancel('Cancel');
 
@@ -277,9 +279,9 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
             .ariaLabel('New Task')
             .initialValue(task.message)
             .targetEvent(ev)
-            .ok('Submit!')
+            .clickOutsideToClose(true)
+            .ok('Submit '  + task.message.length)
             .cancel('Cancel');
-
         $mdDialog.show(confirm).then(function(result) {
 
             var temp = task.message;
@@ -304,6 +306,7 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
             .textContent('There will be no trace of this task, it will disappear into the ether!')
             .ariaLabel('')
             .targetEvent(ev)
+            .clickOutsideToClose(true)
             .ok('Yes')
             .cancel('No');
 
