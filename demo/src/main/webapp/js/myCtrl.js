@@ -280,7 +280,7 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
             .initialValue(task.message)
             .targetEvent(ev)
             .clickOutsideToClose(true)
-            .ok('Submit '  + task.message.length)
+            .ok('Submit ')
             .cancel('Cancel');
         $mdDialog.show(confirm).then(function(result) {
 
