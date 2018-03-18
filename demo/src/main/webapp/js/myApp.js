@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngMaterial', 'ui.sortable']);
+var app = angular.module('myApp', ['ngMaterial', 'ui.sortable', 'ui.bootstrap.contextMenu']);
 
 app.directive("addNewTask", function(){
     return {

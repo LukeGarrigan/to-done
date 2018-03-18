@@ -1,6 +1,10 @@
 .apps-container {
     margin: 10px 10px 0 0;
-    padding: 5px;
     min-width:200px;
     min-height:50px;
+    margin-top: 5px;
+    padding: 8px;
+    border-radius: 10px;
+    background-color: #aaaaaa;
+
 }

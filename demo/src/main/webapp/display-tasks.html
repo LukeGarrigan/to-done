@@ -6,16 +6,17 @@
 </head>
 <body>
 <div class="row">
-    <div class="column" style="background-color:#aaa;" >
-        <h2>TO DO</h2>
+    <div class="column">
+        <h2 style="color:white;">TO DO</h2>
 
         <div class="columnCount">
             {{toDoCount}}
         </div>
 
-        <div class="apps-container" ui-sortable="sortableOptions"  id="sortable" ui-sortable-update="updateOrder"  ng-model="todo">
-            <div  ng-repeat="info in todo| filter:searchCriteria">
-                <div class="task" ng-click="editTask($event ,info)" >
+        <div class="apps-container" ui-sortable="sortableOptions" context-menu="menuOptions"
+             ng-model="todo">
+            <div ng-repeat="info in todo| filter:searchCriteria">
+                <div class="task" ng-click="editTask($event ,info)">
 
                     <div class="cross">
                         <img ng-src="images/cross.png" ng-click="showConfirm($event, info); $event.stopPropagation()"/>
@@ -27,19 +28,19 @@
                 </div>
             </div>
         </div>
-        <md-button class="new-task-text" ng-click="showPrompt($event, 'todo')"   >
+        <md-button class="new-task-text" ng-click="showPrompt($event, 'todo')">
             Add new task...
         </md-button>
     </div>
-    <div class="column" style="background-color:#bbb;">
-        <h2>DOING</h2>
+    <div class="column">
+        <h2 style="color:white;">DOING</h2>
         <div class="columnCount">
             {{doingCount}}
         </div>
 
         <div  class="apps-container" ui-sortable="sortableOptions" ng-model="doing">
             <div ng-repeat="info in doing | filter:searchCriteria">
-                <div class="task"  ng-click="editTask($event ,info)">
+                <div class="task" ng-click="editTask($event ,info)">
                     <div class="cross">
                         <img ng-src="images/cross.png" ng-click="showConfirm($event, info); $event.stopPropagation()"/>
                     </div>
@@ -50,12 +51,12 @@
                 </div>
             </div>
         </div>
-        <md-button class="new-task-text" ng-click="showPrompt($event, 'doing')"   >
+        <md-button class="new-task-text" ng-click="showPrompt($event, 'doing')">
             Add new task...
         </md-button>
     </div>
-    <div class="column" style="background-color:#ccc;">
-        <h2>DONE</h2>
+    <div class="column">
+        <h2 style="color:white;">DONE</h2>
         <div class="columnCount">
             {{completedCount}}
         </div>
@@ -73,12 +74,11 @@
                 </div>
             </div>
         </div>
-        <md-button class="new-task-text" ng-click="showPrompt($event, 'done')"   >
+        <md-button class="new-task-text" ng-click="showPrompt($event, 'done')">
             Add new task...
         </md-button>
     </div>
 </div>
-
 
 
 </body>

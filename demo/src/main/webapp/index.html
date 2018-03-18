@@ -11,7 +11,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
-
+<script src="webjars/angular-bootstrap-contextmenu/0.9.7/contextMenu.js"></script>
 
 
 <!-- Angular Material Library -->
@@ -43,21 +43,22 @@
 
 
 </head>
-<body ng-app="myApp">
-    <div class="container">
-        <div class="jumbotron"?>
-            <h1>TO-DONE</h1>
-            <p>Keep track of stuff you need to do, and bloody do it!</p>
-            <input type="text" ng-model="searchCriteria" class="form-control" placeholder="Search">
-        </div>
-
-        <div ng-controller="myCtrl">
+<body ng-app="myApp" class="todone-background">
 
 
+<div class="jumbotron"/>
+<input type="text" ng-model="searchCriteria" class="form-control" placeholder="Search">
+<br>
+<h2>TO-DONE</h2>
+<p>Keep track of stuff you need to do, and bloody do it!</p>
 
-            <display-tasks></display-tasks>
+</div>
+<div class="container">
+    <div ng-controller="myCtrl">
 
-        </div>
+        <display-tasks></display-tasks>
+
     </div>
+</div>
 </body>
 </html>
