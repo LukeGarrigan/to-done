@@ -13,8 +13,7 @@
             {{toDoCount}}
         </div>
 
-        <div class="apps-container" ui-sortable="sortableOptions" context-menu="menuOptions"
-             ng-model="todo">
+        <div class="apps-container" ui-sortable="sortableOptions" context-menu="menuOptions" ng-model="todo">
             <div ng-repeat="info in todo| filter:searchCriteria">
                 <div class="task" ng-click="editTask($event ,info)">
 

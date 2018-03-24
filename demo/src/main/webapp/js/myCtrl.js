@@ -113,7 +113,7 @@ app.controller("myCtrl", function ($scope, $http, $mdDialog) {
      * @returns {boolean}
      */
     $scope.isValidTask = function(task, ev){
-        if(70-task.message.length < 0){
+        if(150-task.message.length < 0){
             $scope.showAlert(ev, "Too long");
             return false;
         }
