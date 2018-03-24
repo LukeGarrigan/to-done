@@ -6,13 +6,15 @@ body {
     margin: 0;
 }
 
+html, body {margin: 0; height: 100%; overflow: hidden}
+
 /* Create three equal columns that floats next to each other */
 .column {
     float: left;
     width: 33.33%;
     padding: 10px;
     height: 100%;
-    max-height: 800px; /* Should be removed. Only for demonstration */
+    max-height: 1000px; /* Should be removed. Only for demonstration */
     bottom: 0;
     overflow: auto;
 }
@@ -26,7 +28,7 @@ body {
 
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-@media (max-width: 600px) {
+@media (max-width: 900px) {
     .column {
         width: 100%;
     }
@@ -128,21 +130,54 @@ section {
 }
 
 .form-control {
-    max-width: 80%;
+    max-width: 90%;
+    margin: auto;
 }
 
 .todone-background {
     background-color: #353a4b;
 }
 
-.jumbotron {
-    line-height: 30px;
+#jumbotron {
     background-color: #eeeeee;
     height: 100%;
     width: 15%;
     float: left;
-    padding: 10px;
+    padding: 0;
+    margin-top:0;
 }
 
+
+#minimise {
+    width:100%;
+    height:40px;
+    padding: 7px;
+}
+
+#minimise img{
+    width: 20px;
+    height: 20px;
+    float: right;
+}
+
+#maximise {
+    display: none;
+    height:40px;
+    padding: 7px;
+    width:50px;
+    position:absolute;
+}
+
+#maximise img {
+    width:22px;
+    height:22px;
+    float:left;
+}
+
+
+.side-bar-contents {
+    max-width:80%;
+    margin:auto;
+}
 
 

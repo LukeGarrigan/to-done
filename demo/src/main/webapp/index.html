@@ -18,6 +18,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
 <script src="js/myApp.js"></script>
 <script src="js/myCtrl.js"></script>
+<script src="js/sideBar.js"></script>
 
 
 <head>
@@ -25,11 +26,10 @@
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <title>Home page</title>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
-    <link rel="stylesheet" type="text/css" href="styles/style.css"/>
     <link rel="stylesheet" type="text/css" href="styles/popup.css"/>
     <link rel="stylesheet" type="text/css" href="styles/dnd.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
+    <link rel="stylesheet" type="text/css" href="styles/style.css"/>
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -44,16 +44,25 @@
 
 </head>
 <body ng-app="myApp" class="todone-background">
+<div id="maximise">
+    <img src="images/maximise.png" onclick="displaySidebar()"/>
+</div>
 
+<div id="jumbotron">
+<div id="minimise">
+    <img src="images/minimiseTwo.png" onclick="hideSidebar()">
+</div>
 
-<div class="jumbotron"/>
 <input type="text" ng-model="searchCriteria" class="form-control" placeholder="Search">
 <br>
-<h2>TO-DONE</h2>
-<p>Keep track of stuff you need to do, and bloody do it!</p>
+<div class="side-bar-contents">
+    <h2>TO-DONE</h2>
+    <p>Keep track of stuff you need to do, and bloody do it!</p>
+</div>
 
 </div>
 <div class="container">
+
     <div ng-controller="myCtrl">
 
         <display-tasks></display-tasks>
