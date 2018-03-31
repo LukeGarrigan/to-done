@@ -30,6 +30,7 @@
     <link rel="stylesheet" type="text/css" href="styles/dnd.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="styles/style.css"/>
+    <link rel="stylesheet" type="text/css" href="styles/register.css"/>
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -44,28 +45,36 @@
 
 </head>
 <body ng-app="myApp" class="todone-background">
-<div id="maximise">
-    <img src="images/maximise.png" onclick="displaySidebar()"/>
+
+<div ng-show="true">
+    <login-or-register></login-or-register>
 </div>
 
-<div id="jumbotron">
-    <div id="minimise">
-        <img src="images/minimiseTwo.png" onclick="hideSidebar()">
+
+<div class="todo-app"  ng-show="false">
+    <div id="maximise">
+        <img src="images/maximise.png" onclick="displaySidebar()"/>
     </div>
 
-    <input type="text" ng-model="searchCriteria" class="form-control" placeholder="Search">
-    <br>
-    <div class="side-bar-contents">
-        <h2>TO-DONE</h2>
-        <p>Keep track of stuff you need to do, and bloody do it!</p>
+    <div id="jumbotron">
+        <div id="minimise">
+            <img src="images/minimiseTwo.png" onclick="hideSidebar()">
+        </div>
+
+        <input type="text" ng-model="searchCriteria" class="form-control search-bar" placeholder="Search">
+        <br>
+        <div class="side-bar-contents">
+            <h2>TO-DONE</h2>
+            <p>Keep track of stuff you need to do, and bloody do it!</p>
+        </div>
     </div>
-</div>
-<div class="container">
 
-    <div ng-controller="myCtrl">
 
-        <display-tasks></display-tasks>
+    <div class="container">
+        <div ng-controller="myCtrl">
+            <display-tasks></display-tasks>
 
+        </div>
     </div>
 </div>
 </body>

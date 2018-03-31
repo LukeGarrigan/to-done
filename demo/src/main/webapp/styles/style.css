@@ -35,9 +35,13 @@ html, body {margin: 0; height: 100%; overflow: hidden}
     }
 }
 
+.todo-app {
+    height:100%;
+}
 .task:hover {
     background-color: #F8F8FF;
 }
+
 
 .task {
     margin-top: 0.5em;
@@ -130,7 +134,7 @@ section {
     color: white;
 }
 
-.form-control {
+.search-bar {
     max-width: 90%;
     margin: auto;
 }
