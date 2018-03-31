@@ -3,7 +3,7 @@ package com.example.demo.dao.domain;
 import javax.persistence.*;
 
 
-@Entity(name = "user")
+@Entity(name = "todone_user")
 public class User extends AbstractEntity{
 
     @Column(nullable = false)

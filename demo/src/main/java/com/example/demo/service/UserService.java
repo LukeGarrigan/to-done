@@ -21,28 +21,20 @@ public class UserService {
 
 
     /**
+     * Updates the current user, if the user doesn't exist then it creates a new one
+     * need to ensure that we check whether the user exists before doing the creation
      *
-     *  Updates the current user, if the user doesn't exist then it creates a new one
      * @param userDto
      * @return
      */
     public UserDto updateUser(UserDto userDto) {
 
-        User user = userDao.getOne(userDto.getId());
+        User user = new User();
+        user.setEmail(userDto.getEmail());
+        user.setPassword(userDto.getPassword());
+        user.setUsername(userDto.getUsername());
 
-        if (user != null) {
-            user.setEmail(userDto.getEmail());
-            user.setPassword(userDto.getPassword());
-            user.setUsername(userDto.getUsername());
-        } else {
-            // User doesn't exist, so create a new one
-            user = new User();
-            user.setEmail(userDto.getEmail());
-            user.setPassword(userDto.getPassword());
-            user.setUsername(userDto.getUsername());
-            userDao.save(user);
-        }
-
+        userDao.save(user);
         return modelMapper.map(user, UserDto.class);
     }
 
