@@ -9,10 +9,6 @@ public class UserDto implements Serializable {
     private String password;
     private String email;
 
-    public UserDto() {
-
-    }
-
     public long getId() {
         return id;
     }
