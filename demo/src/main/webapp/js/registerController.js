@@ -1,4 +1,4 @@
-app.controller("register", function ($scope, $http) {
+app.controller("registerController", function ($scope, $http) {
 
 
     $scope.user = {};
@@ -24,6 +24,7 @@ app.controller("register", function ($scope, $http) {
             if (userAlreadyExists(response.data)) {
 
             } else {
+                $scope.$parent.userId = response.data.id;
                 $scope.isAuthorised = true;
             }
         });

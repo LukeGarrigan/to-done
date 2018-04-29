@@ -16,6 +16,18 @@ public class Task extends AbstractEntity{
     @Column
     private long sequenceNumber;
 
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private User user;
+
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public long getSequenceNumber() {
         return sequenceNumber;
     }

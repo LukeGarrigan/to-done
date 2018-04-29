@@ -17,9 +17,10 @@
 <!-- Angular Material Library -->
 <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
 <script src="js/myApp.js"></script>
-<script src="js/myCtrl.js"></script>
+<script src="js/applicationController.js"></script>
+<script src="js/displayTasksController.js"></script>
 <script src="js/sideBar.js"></script>
-<script src="js/register.js"></script>
+<script src="js/registerController.js"></script>
 
 
 <head>
@@ -47,34 +48,39 @@
 </head>
 <body ng-app="myApp" class="todone-background">
 
-<div ng-show="true" ng-controller="register">
-    <login-or-register></login-or-register>
-</div>
+<div class="parent-container" ng-controller="applicationController">
 
 
-<div class="todo-app"  ng-show="false">
-    <div id="maximise">
-        <img src="images/maximise.png" onclick="displaySidebar()"/>
-    </div>
 
-    <div id="jumbotron">
-        <div id="minimise">
-            <img src="images/minimiseTwo.png" onclick="hideSidebar()">
-        </div>
-
-        <input type="text" ng-model="searchCriteria" class="form-control search-bar" placeholder="Search">
-        <br>
-        <div class="side-bar-contents">
-            <h2>TO-DONE</h2>
-            <p>Keep track of stuff you need to do, and bloody do it!</p>
-        </div>
+    <div ng-controller="registerController" ng-show="!isUserLoggedIn()">
+        <login-or-register></login-or-register>
     </div>
 
 
-    <div class="container">
-        <div ng-controller="myCtrl">
-            <display-tasks></display-tasks>
+    <div class="todo-app" ng-show="isUserLoggedIn()" >
 
+        <div id="maximise">
+            <img src="images/maximise.png" onclick="displaySidebar()"/>
+        </div>
+
+        <div id="jumbotron">
+            <div id="minimise">
+                <img src="images/minimiseTwo.png" onclick="hideSidebar()">
+            </div>
+
+            <input type="text" ng-model="searchCriteria" class="form-control search-bar" placeholder="Search">
+            <br>
+            <div class="side-bar-contents">
+                <h2>TO-DONE</h2>
+                <p>Keep track of stuff you need to do, and bloody do it!</p>
+            </div>
+        </div>
+
+
+        <div class="container">
+            <div ng-controller="displayTasksController" ng-if="isUserLoggedIn()" ng-init="getAllTasksForUser()">
+                <display-tasks></display-tasks>
+            </div>
         </div>
     </div>
 </div>

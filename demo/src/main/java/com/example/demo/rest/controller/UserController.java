@@ -16,9 +16,10 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public UserDto updateUser(@RequestBody UserDto userDto) {
-        return userService.updateUser(userDto);
-
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public UserDto createUser(@RequestBody UserDto userDto) {
+        return userService.createUser(userDto);
     }
+
+
 }

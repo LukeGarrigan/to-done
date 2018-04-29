@@ -35,6 +35,9 @@ html, body {margin: 0; height: 100%; overflow: hidden}
     }
 }
 
+.parent-container {
+    height:100%;
+}
 .todo-app {
     height:100%;
 }

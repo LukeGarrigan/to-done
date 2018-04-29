@@ -22,6 +22,9 @@ public class TaskService {
     @Autowired
     private TaskDao taskDao;
 
+    @Autowired
+    private UserService userService;
+
     public void updateTasksSequenceNumbers(List<TaskDto> taskDtos){
         List<Task> all = taskDao.findAll();
         for(TaskDto taskDto: taskDtos){
@@ -35,7 +38,7 @@ public class TaskService {
 
     public TaskDto updateTask(TaskDto taskDto){
         Task task = new Task();
-
+        task.setUser(userService.getUser(taskDto.getUserId()));
         task.setMessage(taskDto.getMessage());
         task.setStatus(taskDto.getStatus());
         task.setId(taskDto.getId());
@@ -65,8 +68,8 @@ public class TaskService {
         taskDao.delete(id);
     }
 
-    public List<TaskDto> getAllTasks(){
-        List<Task> all = taskDao.findAll();
+    public List<TaskDto> getAllTasks(long userId){
+        List<Task> all = getAllUsersTasks(userId);
 
         List<TaskDto> allDtos = new ArrayList<>();
 
@@ -84,6 +87,18 @@ public class TaskService {
             }
         });
         return allDtos;
+    }
+
+    private List<Task> getAllUsersTasks(long userId) {
+        List<Task> allTasks = taskDao.findAll();
+
+        List<Task> usersTasks = new ArrayList<>();
+        for (Task task : allTasks) {
+            if(task.getUser().getId() == userId) {
+                usersTasks.add(task);
+            }
+        }
+        return usersTasks;
     }
 
 }

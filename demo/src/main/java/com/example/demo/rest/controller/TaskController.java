@@ -33,9 +33,9 @@ public class TaskController {
         taskService.deleteTask(Long.parseLong(id));
     }
 
-    @RequestMapping(value ="/getTasks", method = RequestMethod.GET)
-    public List<TaskDto> getAllTasks(){
-        return taskService.getAllTasks();
+    @RequestMapping(value ="/getTasks{userId}", method = RequestMethod.GET)
+    public List<TaskDto> getAllTasks(@PathVariable String userId){
+        return taskService.getAllTasks(Long.parseLong(userId));
     }
 
 
