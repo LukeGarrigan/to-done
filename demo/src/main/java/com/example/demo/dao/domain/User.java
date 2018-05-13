@@ -6,23 +6,11 @@ import javax.persistence.*;
 @Entity(name = "todone_user")
 public class User extends AbstractEntity{
 
-    @Column(nullable = false)
-    private String username;
-
     @Column
     private String email;
 
     @Column
     private String password;
-
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getEmail() {
         return email;

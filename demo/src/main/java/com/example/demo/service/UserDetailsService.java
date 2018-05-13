@@ -26,19 +26,6 @@ public class UserDetailsService implements UserService {
     private PasswordEncoder passwordEncoder;
 
 
-    private boolean userAlreadyExists(User userToBeCreated) {
-        for (User existingUser : getAllUsers()) {
-            if (existingUser.getEmail().equals(userToBeCreated.getEmail())) {
-                return true;
-            }
-            if (existingUser.getUsername().equals(userToBeCreated.getUsername())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
     private List<User> getAllUsers() {
         return userDao.findAll();
     }
@@ -49,7 +36,6 @@ public class UserDetailsService implements UserService {
         User user = new User();
         user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setUsername(userDto.getUsername());
 
         if (!userAlreadyExists(user)) {
             userDao.save(user);
@@ -63,5 +49,28 @@ public class UserDetailsService implements UserService {
     public User getUser(long id) {
         return userDao.getOne(id);
     }
+
+    @Override
+    public UserDto loginUser(UserDto userDto) {
+        for (User existingUser : getAllUsers()) {
+            if (existingUser.getEmail().equals(userDto.getEmail())) {
+                if (passwordEncoder.matches(userDto.getPassword(), existingUser.getPassword())) {
+                    return modelMapper.map(existingUser, UserDto.class);
+                }
+            }
+        }
+        return null;
+    }
+
+
+    private boolean userAlreadyExists(User userToBeCreated) {
+        for (User existingUser : getAllUsers()) {
+            if (existingUser.getEmail().equals(userToBeCreated.getEmail())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }

@@ -51,13 +51,12 @@
 <div class="parent-container" ng-controller="applicationController">
 
 
-
     <div ng-controller="registerController" ng-show="!isUserLoggedIn()">
         <login-or-register></login-or-register>
     </div>
 
 
-    <div class="todo-app" ng-show="isUserLoggedIn()" >
+    <div class="todo-app" ng-show="isUserLoggedIn()">
 
         <div id="maximise">
             <img src="images/maximise.png" onclick="displaySidebar()"/>

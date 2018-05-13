@@ -9,6 +9,7 @@ public interface UserService {
 
     User getUser(long id);
 
+    UserDto loginUser(UserDto userDto);
 }
 
 

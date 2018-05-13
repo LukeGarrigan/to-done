@@ -43,17 +43,7 @@ public class TaskService {
         task.setStatus(taskDto.getStatus());
         task.setId(taskDto.getId());
         task.setSequenceNumber(taskDto.getSequenceNumber());
-        List<Task> allTasks = taskDao.findAll();
-
-        boolean taskAlreadyExists = false;
-        for(Task t: allTasks){
-
-            // we want to make sure that we don't have a duplicate and also wantt to ensure that we're not preventing an
-            // update of an already existing task
-            if(t.getMessage().equals(task.getMessage()) && t.getId() != task.getId()){
-              taskAlreadyExists = true;
-            }
-        }
+        boolean taskAlreadyExists = doesTaskAlreadyExist(task);
 
         if(!taskAlreadyExists){
             taskDao.save(task);
@@ -61,6 +51,16 @@ public class TaskService {
 
 
         return modelMapper.map(task, TaskDto.class);
+    }
+
+    private boolean doesTaskAlreadyExist(Task task) {
+        List<Task> allTasks = taskDao.findAll();
+        for(Task t: allTasks){
+            if(t.getMessage().equals(task.getMessage()) && t.getId() != task.getId()){
+               return true;
+            }
+        }
+        return false;
     }
 
 

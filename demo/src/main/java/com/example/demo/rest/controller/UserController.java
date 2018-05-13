@@ -21,5 +21,14 @@ public class UserController {
         return userService.createUser(userDto);
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public UserDto loginUser(@RequestBody UserDto userDto) {
+        return userService.loginUser(userDto);
+    }
+
+
+
+
+
 
 }
