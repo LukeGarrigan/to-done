@@ -26,7 +26,7 @@ public class UserDetailsService implements UserService {
     private PasswordEncoder passwordEncoder;
 
 
-    private List<User> getAllUsers() {
+    public List<User> getAllUsers() {
         return userDao.findAll();
     }
 
@@ -63,7 +63,7 @@ public class UserDetailsService implements UserService {
     }
 
 
-    private boolean userAlreadyExists(User userToBeCreated) {
+    public boolean userAlreadyExists(User userToBeCreated) {
         for (User existingUser : getAllUsers()) {
             if (existingUser.getEmail().equals(userToBeCreated.getEmail())) {
                 return true;
