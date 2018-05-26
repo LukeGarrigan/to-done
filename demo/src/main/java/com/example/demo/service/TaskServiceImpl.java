@@ -26,7 +26,7 @@ public class TaskServiceImpl implements TaskService, DtoDomainConversion<TaskDto
 
     @Override
     public void updateTasksSequenceNumbers(List<TaskDto> taskDtos) {
-        List<Task> all = taskDao.findAll();
+        List<Task> all = taskDao.getTasksForUser(taskDtos.get(0).getUserId());
         for (TaskDto taskDto : taskDtos) {
             for (Task task : all) {
                 if (taskDto.getId() == task.getId()) {
@@ -38,12 +38,8 @@ public class TaskServiceImpl implements TaskService, DtoDomainConversion<TaskDto
 
     @Override
     public TaskDto updateTask(TaskDto taskDto) {
-        Task task = new Task();
-        task.setUser(userService.getUser(taskDto.getUserId()));
-        task.setMessage(taskDto.getMessage());
-        task.setStatus(taskDto.getStatus());
-        task.setId(taskDto.getId());
-        task.setSequenceNumber(taskDto.getSequenceNumber());
+
+        Task task = createTask(taskDto);
         boolean taskAlreadyExists = doesTaskAlreadyExistForUser(task);
 
         if (!taskAlreadyExists) {
@@ -51,6 +47,16 @@ public class TaskServiceImpl implements TaskService, DtoDomainConversion<TaskDto
         }
 
         return toDto(task);
+    }
+
+    private Task createTask(TaskDto taskDto) {
+        Task task = new Task();
+        task.setUser(userService.getUser(taskDto.getUserId()));
+        task.setMessage(taskDto.getMessage());
+        task.setStatus(taskDto.getStatus());
+        task.setId(taskDto.getId());
+        task.setSequenceNumber(taskDto.getSequenceNumber());
+        return task;
     }
 
     private boolean doesTaskAlreadyExistForUser(Task task) {
@@ -70,16 +76,19 @@ public class TaskServiceImpl implements TaskService, DtoDomainConversion<TaskDto
 
     @Override
     public List<TaskDto> getAllTasks(long userId) {
-
-
-        List<Task> all = getAllUsersTasks(userId);
+        List<Task> allUsersTasks = getAllUsersTasks(userId);
 
         List<TaskDto> allDtos = new ArrayList<>();
 
-        for (Task task : all) {
+        for (Task task : allUsersTasks) {
             allDtos.add(toDto(task));
         }
 
+        sortTasks(allDtos);
+        return allDtos;
+    }
+
+    private void sortTasks(List<TaskDto> allDtos) {
         allDtos.sort(new Comparator<TaskDto>() {
             @Override
             public int compare(TaskDto o1, TaskDto o2) {
@@ -89,7 +98,6 @@ public class TaskServiceImpl implements TaskService, DtoDomainConversion<TaskDto
                 return o1.getSequenceNumber() < o2.getSequenceNumber() ? -1 : 1;
             }
         });
-        return allDtos;
     }
 
     @Override
