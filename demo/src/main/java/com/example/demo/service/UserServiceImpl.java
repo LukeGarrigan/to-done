@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserDetailsService implements UserService {
+public class UserServiceImpl implements UserService, DtoDomainConversion<UserDto, User> {
 
 
     @Autowired
@@ -39,7 +39,7 @@ public class UserDetailsService implements UserService {
 
         if (!userAlreadyExists(user)) {
             userDao.save(user);
-            return modelMapper.map(user, UserDto.class);
+            return toDto(user);
         }
 
         return null;
@@ -55,7 +55,7 @@ public class UserDetailsService implements UserService {
         for (User existingUser : getAllUsers()) {
             if (existingUser.getEmail().equals(userDto.getEmail())) {
                 if (passwordEncoder.matches(userDto.getPassword(), existingUser.getPassword())) {
-                    return modelMapper.map(existingUser, UserDto.class);
+                    return toDto(existingUser);
                 }
             }
         }
@@ -73,4 +73,8 @@ public class UserDetailsService implements UserService {
     }
 
 
+    @Override
+    public UserDto toDto(User domain) {
+        return modelMapper.map(domain, UserDto.class);
+    }
 }

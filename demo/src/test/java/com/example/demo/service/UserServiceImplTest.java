@@ -19,20 +19,20 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class UserDetailsServiceTest extends AbstractTest {
+public class UserServiceImplTest extends AbstractTest {
 
     @TestConfiguration
-    static class UserDetailsServiceImplTestContextConfiguration {
+    static class UserServiceImplImplTestContextConfiguration {
 
         @Bean
-        public UserDetailsService employeeService() {
-            return new UserDetailsService();
+        public UserServiceImpl employeeService() {
+            return new UserServiceImpl();
         }
     }
 
 
     @Autowired
-    private UserDetailsService userService;
+    private UserServiceImpl userService;
 
     @MockBean
     private PasswordEncoder passwordEncoder;
