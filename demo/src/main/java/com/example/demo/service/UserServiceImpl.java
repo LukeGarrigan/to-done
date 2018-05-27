@@ -3,6 +3,7 @@ package com.example.demo.service;
 
 import com.example.demo.dao.domain.User;
 import com.example.demo.dao.repository.UserDao;
+import com.example.demo.exceptions.EmailAlreadyRegistered;
 import com.example.demo.exceptions.PasswordIncorrectException;
 import com.example.demo.exceptions.UserNotFoundException;
 import com.example.demo.rest.dto.UserDto;
@@ -43,7 +44,8 @@ public class UserServiceImpl implements UserService, DtoDomainConversion<UserDto
             userDao.save(user);
             return toDto(user);
         }
-        return null;
+        throw new EmailAlreadyRegistered(userDto.getEmail());
+
     }
 
     @Override
