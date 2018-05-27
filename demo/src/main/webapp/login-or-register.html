@@ -53,6 +53,9 @@
                                         <input type="password" ng-model="password" tabindex="2" class="form-control"
                                                placeholder="Password">
                                     </div>
+                                    <div class="login-error-message">
+                                        <p>{{errorMessage}}</p>
+                                    </div>
                                     <div class="form-group text-center">
                                         <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
                                         <label for="remember"> Remember Me</label>
@@ -75,6 +78,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 </form>
                                 <form id="register-form" ng-submit="registerUser()" method="post" role="form"
                                       style="display: none;">

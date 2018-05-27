@@ -3,6 +3,8 @@ package com.example.demo.service;
 
 import com.example.demo.dao.domain.User;
 import com.example.demo.dao.repository.UserDao;
+import com.example.demo.exceptions.PasswordIncorrectException;
+import com.example.demo.exceptions.UserNotFoundException;
 import com.example.demo.rest.dto.UserDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +43,6 @@ public class UserServiceImpl implements UserService, DtoDomainConversion<UserDto
             userDao.save(user);
             return toDto(user);
         }
-
         return null;
     }
 
@@ -52,14 +53,28 @@ public class UserServiceImpl implements UserService, DtoDomainConversion<UserDto
 
     @Override
     public UserDto loginUser(UserDto userDto) {
-        for (User existingUser : getAllUsers()) {
-            if (existingUser.getEmail().equals(userDto.getEmail())) {
-                if (passwordEncoder.matches(userDto.getPassword(), existingUser.getPassword())) {
-                    return toDto(existingUser);
+
+        if (!doesUserExist(userDto)) {
+            throw new UserNotFoundException(userDto.getEmail());
+        } else {
+            for (User existingUser : getAllUsers()) {
+                if (existingUser.getEmail().equals(userDto.getEmail())) {
+                    if (passwordEncoder.matches(userDto.getPassword(), existingUser.getPassword())) {
+                        return toDto(existingUser);
+                    }
                 }
             }
         }
-        return null;
+        throw new PasswordIncorrectException(userDto.getEmail());
+    }
+
+    private boolean doesUserExist(UserDto userDto) {
+        for (User existingUser : getAllUsers()) {
+            if (existingUser.getEmail().equals(userDto.getEmail())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

@@ -8,6 +8,8 @@ app.controller("registerController", function ($scope, $http) {
 
     $scope.isAuthorised = false;
 
+    $scope.errorMessage = "";
+
     $scope.registerUser = function () {
         $scope.user.password = $scope.password;
         $scope.user.email = $scope.email;
@@ -43,6 +45,8 @@ app.controller("registerController", function ($scope, $http) {
                 $scope.$parent.userId = response.data.id;
                 $scope.isAuthorised = true;
             }
+        }, function errorCallback(response) {
+            $scope.errorMessage = response.data.message;
         });
     };
 

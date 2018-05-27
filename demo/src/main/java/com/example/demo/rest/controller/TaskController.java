@@ -15,8 +15,6 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-
-
     @RequestMapping(value ="/update", method = RequestMethod.POST)
     public TaskDto updateTask(@RequestBody TaskDto taskDto){
         return taskService.updateTask(taskDto);
